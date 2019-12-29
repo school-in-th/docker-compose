@@ -1,0 +1,7 @@
+.env
+local_settings.py
+favicon.ico
+media
+static_deploy
+mariadb
+rabbitmq

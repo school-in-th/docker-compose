@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+  school:
+    image: schoolinth/school:${TAG}
+    restart: always
+    volumes:
+      - ./local_settings.py:/code/brain/local_settings.py
+      - ./static_deploy:/code/static_deploy
+      - ./media:/code/media
+      - ./media_private:/code/media_private
+    ports:
+      - 127.0.0.1:${PORT}:80
+      - 127.0.0.1:${PORT_FLOWER}:5555
+  # web:
+  #   image: schoolinth/web:${TAG}
+  #   restart: always
+  #   ports:
+  #     - 127.0.0.1:${PORT_WEB}:80
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./mariadb:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+  rabbitmq:
+    image: rabbitmq:3.8.2-management-alpine
+    restart: always
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq/    
